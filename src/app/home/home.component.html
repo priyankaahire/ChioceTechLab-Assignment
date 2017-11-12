@@ -1,0 +1,52 @@
+﻿<div class="home_page">
+    <div class="header">
+        <div class="left_bar"></div>
+        <div class="right_bar">
+            <p><a [routerLink]="['/login']">Signout</a></p>
+            <p>{{currentUser.username}}</p>
+        </div>
+    </div>
+    <div class="maincontent">
+        <div class="left_main"></div>
+        <div class="content_main">
+                <h2>My Profile</h2>
+                <form name="form">
+                    <div class="profile_div">
+                        <div class="form-group profile_form">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" name="fname" [(ngModel)]="user.firstName" #firstName="ngModel" readonly />
+                           
+                        </div>
+                        <div class="form-group profile_form">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" name="lname" [(ngModel)]="user.lastName"  #lastName="ngModel" readonly />
+                            
+                        </div>
+                    </div>
+                    <div class="profile_div">
+                        <div class="form-group profile_form" >
+                            <label for="emailid">EmailId</label>
+                            <input  type="text" class="form-control" name="email" [(ngModel)]="user.emailid" #emailid="ngModel" readonly />
+                        </div>
+                        <div class="form-group profile_form" >
+                            <label for="contact">Contact</label>
+                            <input type="text" class="form-control" name="mobile" [(ngModel)]="user.contact" #contact="ngModel" readonly />
+                        </div>
+                    </div>
+                    <div class="profile_gender">
+                            <div class="form-gender">
+                            <input type="radio" value="{{user.gender}}" name="gender" [(ngModel)]="user.gender" >{{user.gender}}
+                            </div>    
+                        </div>
+                    <div class="profile_div">
+                        <div class="form-group profile_form" >
+                            <label for="address">Address</label>
+                            <textarea rows="4" cols="57" type="text" class="form-control" name="add" [(ngModel)]="user.address" #address="ngModel" readonly></textarea>
+                        </div>
+                    </div>
+                </form>
+        </div>
+        <div class="right_main"></div>
+    </div>
+    <div class="footer"></div>
+</div>
