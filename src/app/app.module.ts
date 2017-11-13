@@ -2,6 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { FormBuilder, NgForm, FormGroup, Validators } from '@angular/forms';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers/index';
@@ -37,6 +38,7 @@ import { ProfileComponent } from './profile/index';
         AlertService,
         AuthenticationService,
         UserService,
+        FormBuilder,
 
         // providers used to create fake backend
         fakeBackendProvider,

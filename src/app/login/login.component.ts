@@ -12,7 +12,13 @@ export class LoginComponent implements OnInit {
     model: any = {};
     loading = false;
     returnUrl: string;
-
+    /**
+     * 
+     * @param route
+     * @param router
+     * @param authenticationService
+     * @param alertService
+     */
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -26,7 +32,9 @@ export class LoginComponent implements OnInit {
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
-
+    /**
+     * Login method
+     */
     login() {
         this.loading = true;
         this.authenticationService.login(this.model.username , this.model.password)

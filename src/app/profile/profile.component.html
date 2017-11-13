@@ -9,67 +9,80 @@
         <div class="left_main"></div>
         <div class="content_main">
             <h2>My Profile</h2>
-            <form name="form" (ngSubmit)="f.form.valid && createProfile()" #f="ngForm" novalidate>
+            <form *ngIf="active" name="form" #loginForm="ngForm"  (ngSubmit)="loginForm.form.valid && createProfile()" novalidate>
                 <div class="profile_div">
-                    <div class="form-group profile_form" [ngClass]="{ 'has-error': f.submitted && !username .valid }">
-                        <label for="firstName">First Name</label>
-                        <input type="text" class="form-control" name="fname" pattern="(?=.*?[A-Za-z]).{3,12}$" [(ngModel)]="model.firstName" #firstName="ngModel" required />  
-                        <div *ngIf="f.submitted && firstName.errors.required"  class="help-block">First Name is required</div>
-                        <div *ngIf="f.submitted && firstName.errors.pattern"  class="help-block">Invalid First Name</div>
+                    <div class="form-group profile_form" [ngClass]="{ 'has-error': loginForm.submitted && formErrors.firstName}">
+                        <label for="firstName">First Name</label><span style="color:red;">*</span>
+                        <input type="text" class="form-control" name="firstName" pattern="(?=.*?[A-Za-z]).{3,12}$" [(ngModel)]="model.firstName" #firstName="ngModel" required />  
+                        <div *ngIf="formErrors.firstName" [ngClass]="{ 'has-error': formErrors.firstName}">
+                            {{ formErrors.firstName }}
+                        </div>
                     </div>
-                    <div class="form-group profile_form" [ngClass]="{ 'has-error': f.submitted && !username .valid }">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" class="form-control" name="lname" pattern="(?=.*?[A-Za-z]).{3,12}$" [(ngModel)]="model.lastName"  #lastName="ngModel" required />
-                        <div *ngIf="f.submitted && firstName.errors.required"  class="help-block">Last Name is required</div>
-                        <div *ngIf="f.submitted && firstName.errors.pattern"  class="help-block">Invalid Last Name</div>
+                    <div class="form-group profile_form" [ngClass]="{ 'has-error': formErrors.lastName}">
+                        <label for="lastName">Last Name</label><span style="color:red;">*</span>
+                        <input type="text" class="form-control" name="lastName" pattern="(?=.*?[A-Za-z]).{3,12}$" [(ngModel)]="model.lastName"  #lastName="ngModel" required />
+                        <div *ngIf="formErrors.lastName" [ngClass]="{ 'has-error': formErrors.lastName}">
+                            {{ formErrors.lastName }}
+                        </div>
                     </div>
                 </div>
                 <div class="profile_div">
-                    <div class="form-group profile_form" [ngClass]="{ 'has-error': f.submitted && !username .valid }">
-                        <label for="username ">UserId </label>
-                        <input type="text" class="form-control" name="uname "  pattern="(?=.*?[A-Za-z0-9]).{6,12}$" minlength="6" maxlength="12" [(ngModel)]="model.username " #username="ngModel"  required />
-                        <div *ngIf="f.submitted && username.errors.required"  class="help-block">UserId is required</div>
-                        <div *ngIf="f.submitted && username.errors.pattern"   class="help-block">Invalid UserId Ex.priyanka123</div>
-                        <div *ngIf="f.submitted && username.errors.minlength" class="help-block">UserId should be minimum 6 character</div>
-                        <div *ngIf="f.submitted && username.errors.minlength" class="help-block">UserId should be maximun 12 character </div>
+                    <div class="form-group profile_form" [ngClass]="{ 'has-error': formErrors.username}">
+                        <label for="username ">UserId </label><span style="color:red;">*</span>
+                        <input type="text" class="form-control" name="username"  pattern="(?=.*?[A-Za-z0-9]).{6,12}$" minlength="6" maxlength="12" [(ngModel)]="model.username " #username="ngModel"  required />
+                        <div *ngIf="formErrors.username" [ngClass]="{ 'has-error': formErrors.username}">
+                            {{ formErrors.username }}
+                        </div>
                     </div>
-                    <div class="form-group profile_form" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" name="pass" pattern="(?=.*?[A-Za-z0-9])(?=.*?[#@$*]).{6,12}$" minlength="6" maxlength="12" [(ngModel)]="model.password" #password="ngModel" required />
-                        <div *ngIf="f.submitted && password.errors.required" class="help-block">Password is required</div>
-                        <div *ngIf="f.submitted && password.errors.pattern" class="help-block">Invalid Password Ex.priyanka@123</div>
-                        <div *ngIf="f.submitted && password.errors.minlength" class="help-block">Password should be minimum 6 charcter</div>
-                        <div *ngIf="f.submitted && password.errors.minlength" class="help-block">Password should be maximun 12 charcter </div>
+                    <div class="form-group profile_form" [ngClass]="{ 'has-error': formErrors.password}">
+                        <label for="password">Password</label><span style="color:red;">*</span>
+                        <input type="password" class="form-control" name="password" pattern="(?=.*?[A-Za-z0-9])(?=.*?[#@$*]).{6,12}$" minlength="6" maxlength="12" [(ngModel)]="model.password" #password="ngModel" required />
+                        <div *ngIf="formErrors.password" [ngClass]="{ 'has-error': formErrors.password}">
+                            {{ formErrors.password }}
+                        </div>
                     </div>
                 </div>
-                <div class="profile_div">
-                    <div class="form-group profile_form" [ngClass]="{ 'has-error': f.submitted && !username.valid}">
-                        <label for="emailid">EmailId</label>
-                        <input  type="text" class="form-control" name="email" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" [(ngModel)]="model.emailid" #emailid="ngModel" required />
-                        <div *ngIf="f.submitted && emailid.errors.required" class="help-block">Email Id is required</div>
-                        <div *ngIf="f.submitted && emailid.errors.pattern" class="help-block">Email format should be abc@gmail.com</div>
+                 <div class="profile_div">
+                    <div class="form-group profile_form" [ngClass]="{ 'has-error': formErrors.emailid}">
+                        <label for="emailid">EmailId</label><span style="color:red;">*</span>
+                        <input  type="text" class="form-control" name="emailid" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" [(ngModel)]="model.emailid" #emailid="ngModel" required />
+                        <div *ngIf="formErrors.emailid" [ngClass]="{ 'has-error': formErrors.emailid}">
+                            {{ formErrors.emailid }}
+                        </div>
                     </div>
-                    <div class="form-group profile_form" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-                        <label for="contact">Contact</label>
-                        <input type="text" class="form-control" name="cont" minlength="10" maxlength="10" pattern="(?=.*?[0-9]).{10,10}$" [(ngModel)]="model.contact" #contact="ngModel" required />
-                        <div *ngIf="f.submitted && !contact.valid" class="help-block">Contact is required</div>
-                        <div *ngIf="f.submitted && contact.errors.pattern" class="help-block">Conatct should be 10 digit</div>
+                    <div class="form-group profile_form" [ngClass]="{ 'has-error': formErrors.contact}">
+                        <label for="contact">Contact</label><span style="color:red;">*</span>
+                        <input type="text" class="form-control" name="contact" minlength="10" maxlength="10" pattern="(?=.*?[0-9]).{10,10}$" [(ngModel)]="model.contact" #contact="ngModel" required />
+                        <div *ngIf="formErrors.contact" [ngClass]="{ 'has-error': formErrors.contact}">
+                            {{ formErrors.contact }}
+                        </div>
                     </div>
                 </div>
                  <div class="profile_gender">
                     <div class="form-gender">
+                    <label for="gender">Gender</label><span style="color:red;">*</span><br> 
                     <input type="radio" value="Male" name="gender" [(ngModel)]="model.gender" > Male
                     <input type="radio" value="Female" name="gender" [(ngModel)]="model.gender" > Female
-                    </div>    
+                    </div>  
+                    <!-- <div class="form-group profile_form" [ngClass]="{ 'has-error': formErrors.address}">
+                            <label for="address">Address</label>
+                            <textarea rows="4" cols="57" type="text" class="form-control" name="address" [(ngModel)]="model.address" #address="ngModel" required></textarea>
+                            <div *ngIf="formErrors.address" [ngClass]="{ 'has-error': formErrors.contact}">
+                                {{ formErrors.address }}
+                            </div>
+                        </div>   -->
                 </div>
                 <div class="profile_div">
-                    <div class="form-group profile_form" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-                        <label for="address">Address</label>
-                        <textarea rows="4" cols="57" type="text" class="form-control" name="add" [(ngModel)]="model.address" #address="ngModel" required></textarea>
-                        <div *ngIf="f.submitted && contact.errors.required" class="help-block">Address is required</div>
+                    <div class="form-group profile_form" [ngClass]="{ 'has-error': !address.valid && formErrors.address}">
+                        <label for="address">Address</label><span style="color:red;">*</span>
+                        <textarea rows="4" cols="57" type="text" class="form-control" name="address" [(ngModel)]="model.address" #address="ngModel" required></textarea>
+                        <div *ngIf="formErrors.address" [ngClass]="{ 'has-error': formErrors.contact}">
+                            {{ formErrors.address }}
+                        </div>
                     </div>
                 </div>
-                <div class="">
+                <br>
+                <div class="profile_button">
                 <div class="form-group">
                     <button [disabled]="loading" class="btn btn-primary">Save</button>
                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
